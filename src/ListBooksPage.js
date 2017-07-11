@@ -12,7 +12,7 @@ export class ListBooksPage extends Component {
                 <div className="list-books-content">
                     <div>
                         {this.props.shelves.map((shelf, index) => (
-                            <BookShelf key={index} title={shelf[0]} books={shelf.slice(1)}/>
+                            <BookShelf key={index} title={shelf[0]} books={shelf.slice(1)} onSubmit={this.props.onSubmit}/>
                         ))}
                     </div>
                 </div>

@@ -59,6 +59,9 @@ class BooksApp extends Component {
         ;
     }
 
+    onSubmit(title, selection) {
+        let a = 2; // todo: problem: should we reorganise our state with the title as the key?
+    }
 
     render() {
         return (
@@ -67,7 +70,7 @@ class BooksApp extends Component {
                     <SearchBooksPage/>
                 )}/>
                 <Route exact path="/" render={() => (
-                    <ListBooksPage shelves={this.state.shelves}/>
+                    <ListBooksPage shelves={this.state.shelves} onSubmit={this.onSubmit}/>
                 )}/>
             </div>
         )

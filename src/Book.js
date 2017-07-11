@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
 
 export class Book extends Component {
+    handleSubmit = (e) => {
+        this.props.onSubmit(this.props.title, e)
+    }
+
     render() {
         return (
             <div className="book">
@@ -11,13 +15,11 @@ export class Book extends Component {
                         backgroundImage: `${this.props.imgUrl}`
                     }}/>
                     <div className="book-shelf-changer">
-                        <select>
+                        <select onChange={e => this.handleSubmit(e.target.value)}>
                             <option value="none" disabled>Move to...</option>
-                            <option value="currentlyReading">Currently Reading
-                            </option>
-                            <option value="wantToRead">Want to Read</option>
-                            <option value="read">Read</option>
-                            <option value="none">None</option>
+                            <option value="Currently Reading">Currently Reading</option>
+                            <option value="Want To Read">Want to Read</option>
+                            <option value="Read">Read</option>
                         </select>
                     </div>
                 </div>

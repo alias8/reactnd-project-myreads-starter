@@ -8,11 +8,11 @@ export class BookShelf extends Component {
                 <h2 className="bookshelf-title">{this.props.title}</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                        <li>
-                            {this.props.books.map((book, index) => (
-                                <Book key={index} title={book.title} author={book.author} imgUrl={book.imgUrl}/>
-                            ))}
-                        </li>
+                        {this.props.books.map((book, index) => (
+                            <li>
+                                <Book key={index} title={book.title} author={book.author} imgUrl={book.imgUrl} onSubmit={this.props.onSubmit}/>
+                            </li>
+                        ))}
                     </ol>
                 </div>
             </div>
