@@ -9,8 +9,8 @@ export class BookShelf extends Component {
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {this.props.books.map((book, index) => (
-                            <li>
-                                <Book key={index} id={book.id} shelf={this.props.shelfTitle} title={book.title} author={book.authors[0]} imgUrl={book.imageLinks.thumbnail} onSubmit={this.props.onSubmit}/>
+                            <li key={index}>
+                                <Book id={book.id} shelf={this.props.shelfTitle} title={book.title} author={book.authors[0]} imgUrl={book.imageLinks.thumbnail} onSubmit={this.props.onSubmit}/>
                             </li>
                         ))}
                     </ol>

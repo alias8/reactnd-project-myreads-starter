@@ -4,9 +4,10 @@ import {BookShelf} from "./BookShelf";
 
 export class ListBooksPage extends Component {
 	render() {
+        let currentlyReading = this.props.books.filter(book => book.shelf === "currentlyReading");
 		let wantToRead = this.props.books.filter(book => book.shelf === "wantToRead");
 		let read = this.props.books.filter(book => book.shelf === "read");
-		let currentlyReading = this.props.books.filter(book => book.shelf === "currentlyReading");
+
 		return (
 			<div className="list-books">
 				<div className="list-books-title">
