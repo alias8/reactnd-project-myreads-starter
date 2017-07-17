@@ -1,25 +1,28 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from "./BooksAPI";
+import {BookShelf} from "./BookShelf";
 
 export class SearchBooksPage extends Component {
     state = {
-        query: ''
-    }
+        query: '',
+        books: []
+    };
 
     updateQuery = (query) => {
         this.setState({query: query.target.value.trim()})
-    }
+    };
 
     handleSubmit = (event) => {
-        let query = this.state.query
-        BooksAPI.search(query, 10).then(response=> {
-            let c = 2;
+        event.preventDefault();
+        let query = this.state.query;
+        BooksAPI.search(query, 10).then(books => {
+            this.setState({books})
         })
-    }
+    };
 
     render() {
-        const {query} = this.state
+        const {query} = this.state;
 
         return (
             <div className="search-books">
@@ -36,7 +39,7 @@ export class SearchBooksPage extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <ol className="books-grid"></ol>
+                    <BookShelf shelfTitle={"Search Results"} books={this.state.books} onSubmit={this.props.onSubmit}/>
                 </div>
             </div>
         )

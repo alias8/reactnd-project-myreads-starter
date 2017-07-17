@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import {Link, Route} from 'react-router-dom'
-import './App.css'
+import React, {Component} from "react";
+import {Route} from "react-router-dom";
+import "./App.css";
 import {SearchBooksPage} from "./SearchBooksPage";
 import {ListBooksPage} from "./ListBooksPage";
-import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from "./BooksAPI";
 
 export default class BooksApp extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ export default class BooksApp extends Component {
         this.update()
     }
 
-    update(){
+    update() {
         BooksAPI.getAll().then(books => {
             this.setState({books})
         })
@@ -34,7 +34,7 @@ export default class BooksApp extends Component {
         return (
             <div className="app">
                 <Route exact path='/search' render={() => (
-                    <SearchBooksPage/>
+                    <SearchBooksPage onSubmit={this.onSubmit}/>
                 )}/>
                 <Route exact path="/" render={() => (
                     <ListBooksPage books={this.state.books} onSubmit={this.onSubmit}/>
