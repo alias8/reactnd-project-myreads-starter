@@ -8,7 +8,7 @@ export class SearchBooksPage extends Component {
 	}
 	
 	updateQuery = (query) => {
-		this.setState({query: query.trim()})
+		this.setState({query: query.target.value.trim()})
 	}
 	
 	
@@ -24,7 +24,7 @@ export class SearchBooksPage extends Component {
 						<input type="text"
 							   placeholder="Search by title or author"
 							   value={query}
-							   onChange={(event) => this.updateQuery(event.target.value)}
+							   onChange={this.updateQuery}
 						/>
 					</div>
 				</div>

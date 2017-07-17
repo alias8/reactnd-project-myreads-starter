@@ -18,16 +18,13 @@ export default class BooksApp extends Component {
         this.update()
     }
 
-    update = () => { // why do we have to bind update() to BooksApp?
+    update(){
         BooksAPI.getAll().then(books => {
-            this.setState({books}) // why is this undefined here?
+            this.setState({books})
         })
     }
 
     onSubmit = (id, shelf) => {
-        if (shelf === "Want to Read") shelf = "wantToRead";
-        else if (shelf === "Currently Reading") shelf = "currentlyReading";
-        else if (shelf === "Read") shelf = "read";
         BooksAPI.update({id}, shelf).then(response => {
             this.update()
         })
