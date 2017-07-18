@@ -6,7 +6,8 @@ import {BookShelf} from "./BookShelf";
 export class SearchBooksPage extends Component {
     state = {
         query: '',
-        books: []
+        books: [],
+        searchSuccessful: false
     };
 
     updateQuery = (query) => {
@@ -17,16 +18,17 @@ export class SearchBooksPage extends Component {
         event.preventDefault();
         let query = this.state.query;
         BooksAPI.search(query, 10).then(books => {
-            if(books.length > 0) {
-                this.setState({books})
-			} else {
-                let a= 2;
+            if (books.length > 0) {
+                this.setState({books, searchSuccessful: true})
+            }
+            else {
+                this.setState({books:[], searchSuccessful: false})
             }
         })
     };
 
     render() {
-        const {query} = this.state;
+        const {query} = this.state.query;
 
         return (
             <div className="search-books">
@@ -43,7 +45,14 @@ export class SearchBooksPage extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <BookShelf shelfTitle={"Search Results"} books={this.state.books} onSubmit={this.props.onSubmit}/>
+                    {this.state.searchSuccessful  &&
+                    <BookShelf shelfTitle={"Search Results"}
+                               books={this.state.books}
+                               onSubmit={this.props.onSubmit}/>}
+                    {!this.state.searchSuccessful  &&
+                    <BookShelf shelfTitle={"No Results to Display"}
+                               books={this.state.books}
+                               onSubmit={this.props.onSubmit}/>}
                 </div>
             </div>
         )
