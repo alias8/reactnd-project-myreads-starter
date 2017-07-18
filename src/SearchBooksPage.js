@@ -17,7 +17,11 @@ export class SearchBooksPage extends Component {
         event.preventDefault();
         let query = this.state.query;
         BooksAPI.search(query, 10).then(books => {
-            this.setState({books})
+            if(books.length > 0) {
+                this.setState({books})
+			} else {
+                let a= 2;
+            }
         })
     };
 
