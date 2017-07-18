@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {BookShelf} from "./BookShelf";
+import {LoadingScreen} from "./LoadingScreen"
 
 export class ListBooksPage extends Component {
     render() {
@@ -13,11 +14,21 @@ export class ListBooksPage extends Component {
                 <div className="list-books-title">
                     <h1>MyReads</h1>
                 </div>
+                {this.props.books.length === 0 &&
+                <LoadingScreen/>}
                 <div className="list-books-content">
-                    <BookShelf shelfTitle={"Currently Reading"} books={currentlyReading}
+                    <BookShelf shelfTitle={"Currently Reading"}
+                               books={currentlyReading}
+                               ratings={this.props.ratings}
                                onSubmit={this.props.onSubmit}/>
-                    <BookShelf shelfTitle={"Want to Read"} books={wantToRead} onSubmit={this.props.onSubmit}/>
-                    <BookShelf shelfTitle={"Read"} books={read} onSubmit={this.props.onSubmit}/>
+                    <BookShelf shelfTitle={"Want to Read"}
+                               books={wantToRead}
+                               ratings={this.props.ratings}
+                               onSubmit={this.props.onSubmit}/>
+                    <BookShelf shelfTitle={"Read"}
+                               books={read}
+                               ratings={this.props.ratings}
+                               onSubmit={this.props.onSubmit}/>
                 </div>
                 <div className="open-search">
                     <Link to="/search">Add a book</Link>

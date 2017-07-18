@@ -2,12 +2,14 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
 import {BookShelf} from "./BookShelf";
+import {LoadingScreen} from "./LoadingScreen"
 
 export class SearchBooksPage extends Component {
     state = {
         query: '',
         books: [],
-        searchSuccessful: false
+        searchSuccessful: false,
+        queryInProgress: false
     };
 
     updateQuery = (query) => {
@@ -17,12 +19,13 @@ export class SearchBooksPage extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         let query = this.state.query;
+        this.setState({queryInProgress: true});
         BooksAPI.search(query, 10).then(books => {
             if (books.length > 0) {
-                this.setState({books, searchSuccessful: true})
+                this.setState({books, queryInProgress: false, searchSuccessful: true})
             }
             else {
-                this.setState({books:[], searchSuccessful: false})
+                this.setState({books: [], queryInProgress: false, searchSuccessful: false})
             }
         })
     };
@@ -44,12 +47,14 @@ export class SearchBooksPage extends Component {
                         </form>
                     </div>
                 </div>
+                {this.state.queryInProgress &&
+                <LoadingScreen/>}
                 <div className="search-books-results">
-                    {this.state.searchSuccessful  &&
+                    {this.state.searchSuccessful &&
                     <BookShelf shelfTitle={"Search Results"}
                                books={this.state.books}
                                onSubmit={this.props.onSubmit}/>}
-                    {!this.state.searchSuccessful  &&
+                    {!this.state.searchSuccessful &&
                     <BookShelf shelfTitle={"No Results to Display"}
                                books={this.state.books}
                                onSubmit={this.props.onSubmit}/>}

@@ -15,6 +15,7 @@ export class BookShelf extends Component {
                                       title={book.title}
                                       author={book.authors ? book.authors.join(", ") : ""}
                                       imgUrl={book.imageLinks ? book.imageLinks.thumbnail : ""}
+                                      rating={this.props.rating}
                                       onSubmit={this.props.onSubmit}/>
                             </li>
                         ))}

@@ -4,6 +4,7 @@ import "./App.css";
 import {SearchBooksPage} from "./SearchBooksPage";
 import {ListBooksPage} from "./ListBooksPage";
 import * as BooksAPI from "./BooksAPI";
+import {LoadingScreen} from "./LoadingScreen"
 
 export default class BooksApp extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ export default class BooksApp extends Component {
     }
 
     state = {
-        books: []
+        books: [],
+        ratings: []
     }
 
     componentDidMount() {
@@ -25,6 +27,7 @@ export default class BooksApp extends Component {
     }
 
     onSubmit = (id, shelf) => {
+        this.setState({id, rating: 5});
         BooksAPI.update({id}, shelf).then(response => {
             this.update()
         })
@@ -37,9 +40,12 @@ export default class BooksApp extends Component {
                     <SearchBooksPage onSubmit={this.onSubmit}/>
                 )}/>
                 <Route exact path="/" render={() => (
-                    <ListBooksPage books={this.state.books} onSubmit={this.onSubmit}/>
+                    <ListBooksPage books={this.state.books} ratings={this.state.ratings} onSubmit={this.onSubmit}/>
                 )}/>
             </div>
         )
     }
 }
+
+
+
