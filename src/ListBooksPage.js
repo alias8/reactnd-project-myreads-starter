@@ -20,15 +20,18 @@ export class ListBooksPage extends Component {
                     <BookShelf shelfTitle={"Currently Reading"}
                                books={currentlyReading}
                                ratings={this.props.ratings}
-                               onSubmit={this.props.onSubmit}/>
+                               onSubmitCategoryChange={this.props.onSubmitCategoryChange}
+                               onSubmitRatingsChange={this.props.onSubmitRatingsChange}/>
                     <BookShelf shelfTitle={"Want to Read"}
                                books={wantToRead}
                                ratings={this.props.ratings}
-                               onSubmit={this.props.onSubmit}/>
+                               onSubmitCategoryChange={this.props.onSubmitCategoryChange}
+                               onSubmitRatingsChange={this.props.onSubmitRatingsChange}/>
                     <BookShelf shelfTitle={"Read"}
                                books={read}
                                ratings={this.props.ratings}
-                               onSubmit={this.props.onSubmit}/>
+                               onSubmitCategoryChange={this.props.onSubmitCategoryChange}
+                               onSubmitRatingsChange={this.props.onSubmitRatingsChange}/>
                 </div>
                 <div className="open-search">
                     <Link to="/search">Add a book</Link>
