@@ -44,7 +44,7 @@ export default class BooksApp extends Component {
     onSubmitRatingsChange = (id, rating) => {
         this.setState(function (prevState, props) {
             let a = {ratings: Object.assign({}, prevState.ratings, [{id, rating}])};
-            return a;
+            return a; // why doesn't this work?
         });
     };
 
