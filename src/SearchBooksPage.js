@@ -53,11 +53,11 @@ export class SearchBooksPage extends Component {
                     {this.state.searchSuccessful &&
                     <BookShelf shelfTitle={"Search Results"}
                                books={this.state.books}
-                               onSubmit={this.props.onSubmitCategoryChange}/>}
+                               onSubmitCategoryChange={this.props.onSubmitCategoryChange}/>}
                     {!this.state.searchSuccessful &&
                     <BookShelf shelfTitle={"No Results to Display"}
                                books={this.state.books}
-                               onSubmit={this.props.onSubmitCategoryChange}/>}
+                               onSubmitCategoryChange={this.props.onSubmitCategoryChange}/>}
                 </div>
             </div>
         )

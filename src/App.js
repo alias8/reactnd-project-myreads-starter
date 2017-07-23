@@ -26,12 +26,23 @@ export default class BooksApp extends Component {
         this.setState({ratings})
     }
 
+    merge(prevState) {
+        return prevState.books.map(book => { // merge ratings into book state
+            const myRating = prevState.ratings.filter(rating => rating.id === book.id);
+            if(myRating.length === 1) {
+                book.rating = myRating[0].rating;
+            } else if(myRating.length === 0) {
+                book.rating = "unrated"
+            }
+            return book;
+        });
+    }
+
     update() {
         BooksAPI.getAll().then(books => {
-            this.setState({books: books});
-            if (this.state.ratings.length === 0) {
-                this.initRatings(books)
-            }
+            if (this.state.ratings.length === 0) this.initRatings(books);
+            const mergedBooks = this.merge(books)
+            this.setState({books: mergedBooks});
         })
     }
 
@@ -42,22 +53,26 @@ export default class BooksApp extends Component {
     };
 
     onSubmitRatingsChange = (id, rating) => {
-        this.setState(function (prevState, props) {
-            let a = {ratings: Object.assign({}, prevState.ratings, [{id, rating}])};
-            return a; // why doesn't this work?
+        this.setState((prevState, props) => {
+            const ratings = prevState.ratings.map(r => {
+                if (r.id === id) r.rating = rating;
+                return r;
+            });
+            const books = this.merge(prevState)
+            return {books, ratings};
         });
+
     };
 
     render() {
         return (
             <div className="app">
                 <Route exact path='/search' render={() => (
-                    <SearchBooksPage onSubmit={this.onSubmitCategoryChange}/>
+                    <SearchBooksPage onSubmitCategoryChange={this.onSubmitCategoryChange}/>
                 )}/>
                 <Route exact path="/" render={() => (
                     <ListBooksPage
                         books={this.state.books}
-                        ratings={this.state.ratings}
                         onSubmitCategoryChange={this.onSubmitCategoryChange}
                         onSubmitRatingsChange={this.onSubmitRatingsChange}/>
                 )}/>
