@@ -4,6 +4,7 @@ import "./App.css";
 import {SearchBooksPage} from "./SearchBooksPage";
 import {ListBooksPage} from "./ListBooksPage";
 import * as BooksAPI from "./BooksAPI";
+import * as Globals from "./Globals";
 
 export default class BooksApp extends Component {
     constructor(props) {
@@ -17,64 +18,57 @@ export default class BooksApp extends Component {
 
     componentDidMount() {
         this.update();
+        this.clearLocalStorage()
     }
 
-    initRatings(books) {
-        const ratings = books.map(book => {
-            return {id: book.id, rating: "unrated"}
-        });
-        this.setState({ratings})
-    }
-
-    merge(prevState) {
-        return prevState.books.map(book => { // merge ratings into book state
-            const myRating = prevState.ratings.filter(rating => rating.id === book.id);
-            if(myRating.length === 1) {
-                book.rating = myRating[0].rating;
-            } else if(myRating.length === 0) {
-                book.rating = "unrated"
-            }
-            return book;
-        });
+    clearLocalStorage() {
+        Object.keys(window.localStorage).forEach(key=> {
+            window.localStorage.removeItem(key)
+        })
     }
 
     update() {
         BooksAPI.getAll().then(books => {
-            if (this.state.ratings.length === 0) this.initRatings(books);
-            const mergedBooks = this.merge(books)
-            this.setState({books: mergedBooks});
-        })
+            this.setState({books});
+        });
+        const keys = Object.keys(window.localStorage);
+        let ratings = [];
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if(key.includes(Globals.localStorageToken)) { // only include tokens from this session
+                const value = window.localStorage[key];
+                ratings.push(JSON.parse(value));
+            }
+        }
+        this.setState({ratings});
     }
 
-    onSubmitCategoryChange = (id, shelf) => {
-        BooksAPI.update({id}, shelf).then(response => {
-            this.update()
-        })
-    };
-
-    onSubmitRatingsChange = (id, rating) => {
-        this.setState((prevState, props) => {
-            const ratings = prevState.ratings.map(r => {
-                if (r.id === id) r.rating = rating;
-                return r;
-            });
-            const books = this.merge(prevState)
-            return {books, ratings};
-        });
-
+    onSubmitChange = (id, selectOption, data) => {
+        switch (selectOption) {
+            case "select shelf":
+                BooksAPI.update({id}, data).then(response => {
+                    this.update()
+                });
+                break;
+            case "select rating":
+                let obj = {id, rating: data};
+                window.localStorage.setItem(`${Globals.localStorageToken} ${id}`, JSON.stringify(obj));
+                this.update();
+                break;
+        }
     };
 
     render() {
         return (
             <div className="app">
                 <Route exact path='/search' render={() => (
-                    <SearchBooksPage onSubmitCategoryChange={this.onSubmitCategoryChange}/>
+                    <SearchBooksPage onSubmitChange={this.onSubmitChange}/>
                 )}/>
                 <Route exact path="/" render={() => (
                     <ListBooksPage
                         books={this.state.books}
-                        onSubmitCategoryChange={this.onSubmitCategoryChange}
-                        onSubmitRatingsChange={this.onSubmitRatingsChange}/>
+                        ratings={this.state.ratings}
+                        onSubmitChange={this.onSubmitChange}/>
                 )}/>
             </div>
         )

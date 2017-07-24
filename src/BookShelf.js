@@ -13,9 +13,8 @@ export const BookShelf = (props) => (
                               title={book.title}
                               author={book.authors ? book.authors.join(", ") : ""}
                               imgUrl={book.imageLinks ? book.imageLinks.thumbnail : ""}
-                              rating={book.rating}
-                              onSubmitCategoryChange={props.onSubmitCategoryChange}
-                              onSubmitRatingsChange={props.onSubmitRatingsChange}/>
+                              ratings={props.ratings}
+                              onSubmitChange={props.onSubmitChange}/>
                     </li>
                 ))}
             </ol>

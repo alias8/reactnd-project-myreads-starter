@@ -20,8 +20,8 @@ export const ListBooksPage = (props) => {
                     <BookShelf key={index}
                                shelfTitle={Globals.CATEGORIES[index]}
                                books={books}
-                               onSubmitCategoryChange={props.onSubmitCategoryChange}
-                               onSubmitRatingsChange={props.onSubmitRatingsChange}/>
+                               ratings={props.ratings}
+                               onSubmitChange={props.onSubmitChange}/>
 
                 ))}
             </div>

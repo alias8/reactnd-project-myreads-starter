@@ -2,19 +2,23 @@ import React from "react";
 import * as Globals from "./Globals";
 
 export const Book = (props) => {
-    const handleSubmitCategoryChange = (e) => {
-        let shelf = e.target.value;
-        if (shelf === Globals.CURRENTLY_READING) shelf = Globals.CURRENTLY_READING_CAMELCASE;
-        else if (shelf === Globals.WANT_TO_READ) shelf = Globals.WANT_TO_READ_CAMELCASE;
-        else if (shelf === Globals.READ) shelf = Globals.READ_CAMELCASE;
-        props.onSubmitCategoryChange(props.id, shelf)
+    const handleChange = (e) => {
+        let value = e.target.value;
+        if (value === Globals.CURRENTLY_READING) value = Globals.CURRENTLY_READING_CAMELCASE;
+        else if (value === Globals.WANT_TO_READ) value = Globals.WANT_TO_READ_CAMELCASE;
+        else if (value === Globals.READ) value = Globals.READ_CAMELCASE;
+        props.onSubmitChange(props.id, e.target.name, value)
     };
 
-    const handleSubmitRatingChange = (e) => {
-        const rating = e.target.value;
-        props.onSubmitRatingsChange(props.id, rating)
+    const rating = () => {
+        if(props.ratings) {
+            const rating = props.ratings.filter(rating => rating.id === props.id);
+            if(rating.length === 1) return rating[0].rating;
+            else return "unrated";
+        } else {
+            return "unrated"
+        }
     };
-
 
     return (
         <div className="book">
@@ -25,7 +29,7 @@ export const Book = (props) => {
                     backgroundImage: `url(${props.imgUrl})`
                 }}/>
                 <div className="book-shelf-changer-right">
-                    <select value={props.shelf} onChange={handleSubmitCategoryChange}>
+                    <select name="select shelf" value={props.shelf} onChange={handleChange}>
                         <option value="none" disabled>Move to...</option>
                         <option value={Globals.CURRENTLY_READING}>{Globals.CURRENTLY_READING}</option>
                         <option value={Globals.WANT_TO_READ}>{Globals.WANT_TO_READ}</option>
@@ -33,7 +37,7 @@ export const Book = (props) => {
                     </select>
                 </div>
                 <div className="book-shelf-changer-left">
-                    <select onChange={handleSubmitRatingChange}>
+                    <select name="select rating" onChange={handleChange}>
                         <option value={props.title} disabled>Rate this book</option>
                         {[1, 2, 3, 4, 5].map(rating => (
                             <option key={rating} value={rating}>{rating}</option>
@@ -44,7 +48,7 @@ export const Book = (props) => {
             </div>
             <div className="book-title">{props.title}</div>
             <div className="book-authors">{props.author}</div>
-            <div className="book-title">Your rating: {props.rating}</div>
+            <div className="book-authors">{rating()}</div>
         </div>
     )
 };
