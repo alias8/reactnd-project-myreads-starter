@@ -9,11 +9,10 @@ export const BookShelf = (props) => (
 				{props.books.map((book, index) => (
 					<li key={index}>
 						<Book id={book.id}
-							  shelf={props.shelfTitle}
+							  shelf={book.shelf}
 							  title={book.title}
 							  author={book.authors ? book.authors.join(", ") : ""}
 							  imgUrl={book.imageLinks ? book.imageLinks.thumbnail : ""}
-							  ratings={props.ratings}
 							  onSubmitChange={props.onSubmitChange}/>
 					</li>
 				))}

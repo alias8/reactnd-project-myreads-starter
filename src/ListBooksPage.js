@@ -20,7 +20,6 @@ export const ListBooksPage = (props) => {
 					<BookShelf key={index}
 							   shelfTitle={Globals.CATEGORIES[index]}
 							   books={books}
-							   ratings={props.ratings}
 							   onSubmitChange={props.onSubmitChange}/>
 				
 				))}
