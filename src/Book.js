@@ -41,7 +41,7 @@ export class Book extends Component {
 						backgroundImage: `url(${this.props.imgUrl})`
 					}}/>
 					<div className="book-shelf-changer-right">
-						<select name="select shelf" value={this.props.shelf} onChange={this.handleChange}>
+						<select name="select shelf" value={Globals.MAP_CAMELCASE_TO_NORMAL[this.props.shelf]} onChange={this.handleChange}>
 							<option value="none" disabled>Move to...</option>
 							<option value={Globals.CURRENTLY_READING}>{Globals.CURRENTLY_READING}</option>
 							<option value={Globals.WANT_TO_READ}>{Globals.WANT_TO_READ}</option>
