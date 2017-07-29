@@ -2,10 +2,6 @@ import React, {Component} from "react";
 import * as Globals from "./Globals";
 
 export class Book extends Component {
-	constructor(props) {
-		super(props);
-	}
-	
 	state = {
 		rating: ""
 	};
@@ -64,7 +60,5 @@ export class Book extends Component {
 			</div>
 		)
 	}
-	
 }
-;
 

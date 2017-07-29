@@ -43,7 +43,9 @@ export default class BooksApp extends Component {
 		return (
 			<div className="app">
 				<Route exact path='/search' render={() => (
-					<SearchBooksPage onSubmitChange={this.onSubmitChange}/>
+					<SearchBooksPage
+						books={this.state.books}
+						onSubmitChange={this.onSubmitChange}/>
 				)}/>
 				<Route exact path="/" render={() => (
 					<ListBooksPage

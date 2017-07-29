@@ -12,6 +12,7 @@ export let MAP_CAMELCASE_TO_NORMAL = {};
 CATEGORIES_CAMELCASE.forEach((item, index) => {
 	MAP_CAMELCASE_TO_NORMAL[item] = CATEGORIES[index]
 });
+MAP_CAMELCASE_TO_NORMAL["none"] = "";
 
 export let MAP_NORMAL_TO_CAMELCASE = {};
 CATEGORIES.forEach((item, index) => {
