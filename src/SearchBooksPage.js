@@ -15,40 +15,6 @@ export class SearchBooksPage extends Component {
     updateQuery = (query) => {
         this.setState({query: query.target.value.trim()})
     };
-
-    checkCorrectShelf(booksFromSearch) {
-        let booksFromTopLevel = this.props.books;
-        let correctedBooksFromShelf = booksFromSearch; // initialise
-        booksFromSearch.forEach((bookFromSearch, index, array) => {
-            let correctBook;
-            for (let i = 0; i < booksFromTopLevel.length; i++) { // find (if any) top level book that matches
-                let topLevelBook = booksFromTopLevel[i];
-                if(topLevelBook.id === bookFromSearch.id) {
-                    correctBook = topLevelBook;
-                    break; // book found, stop search
-                }
-            }
-            if(correctBook) {
-                for (let j = 0; j < correctedBooksFromShelf.length; j++) {
-                    let obj = correctedBooksFromShelf[j];
-                    if(obj.id === bookFromSearch.id) {
-                        correctedBooksFromShelf[j].shelf = correctBook.shelf;
-                        break; // book found, stop search
-                    }
-                }
-            } else {
-                for (let j = 0; j < correctedBooksFromShelf.length; j++) {
-                    let obj = correctedBooksFromShelf[j];
-                    if(obj.id === bookFromSearch.id) {
-                        correctedBooksFromShelf[j].shelf = "none";
-                        break; // book found, stop search
-                    }
-                }
-            }
-        });
-        return correctedBooksFromShelf;
-    }
-
     handleSubmit = (event) => {
         event.preventDefault();
         let query = this.state.query;
@@ -63,6 +29,39 @@ export class SearchBooksPage extends Component {
             }
         })
     };
+
+    checkCorrectShelf(booksFromSearch) {
+        let booksFromTopLevel = this.props.books;
+        let correctedBooksFromShelf = booksFromSearch; // initialise
+        booksFromSearch.forEach((bookFromSearch, index, array) => {
+            let correctBook;
+            for (let i = 0; i < booksFromTopLevel.length; i++) { // find (if any) top level book that matches
+                let topLevelBook = booksFromTopLevel[i];
+                if (topLevelBook.id === bookFromSearch.id) {
+                    correctBook = topLevelBook;
+                    break; // book found, stop search
+                }
+            }
+            if (correctBook) {
+                for (let j = 0; j < correctedBooksFromShelf.length; j++) {
+                    let obj = correctedBooksFromShelf[j];
+                    if (obj.id === bookFromSearch.id) {
+                        correctedBooksFromShelf[j].shelf = correctBook.shelf;
+                        break; // book found, stop search
+                    }
+                }
+            } else { 
+                for (let j = 0; j < correctedBooksFromShelf.length; j++) {
+                    let obj = correctedBooksFromShelf[j];
+                    if (obj.id === bookFromSearch.id) {
+                        correctedBooksFromShelf[j].shelf = "none";
+                        break; // book found, stop search
+                    }
+                }
+            }
+        });
+        return correctedBooksFromShelf;
+    }
 
     render() {
         const {query} = this.state.query;
