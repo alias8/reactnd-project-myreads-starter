@@ -5,19 +5,19 @@ import {SearchBooksPage} from "./SearchBooksPage";
 import {ListBooksPage} from "./ListBooksPage";
 import * as BooksAPI from "./BooksAPI";
 
-export default class BooksApp extends Component {
-    state = {
-        books: []
-    };
+export default class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            books: []
+        };
+    }
+
     onSubmitChange = (id, selectOption, data) => {
         BooksAPI.update({id}, data).then(response => {
             this.update()
         });
     };
-
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.update();
@@ -34,26 +34,25 @@ export default class BooksApp extends Component {
         BooksAPI.getAll().then(books => {
             this.setState({books});
         });
-
     }
 
     render() {
         return (
             <div className="app">
-                <Route exact path='/search' render={() => (
+                <Route exact path='/search' render={()=> (
                     <SearchBooksPage
                         books={this.state.books}
-                        onSubmitChange={this.onSubmitChange}/>
-                )}/>
-                <Route exact path="/" render={() => (
+                        onSubmitChange={this.onSubmitChange}/>)}/>
+                <Route exact path="/" render={()=>(
                     <ListBooksPage
                         books={this.state.books}
-                        onSubmitChange={this.onSubmitChange}/>
-                )}/>
+                        onSubmitChange={this.onSubmitChange}/>)}/>
             </div>
         )
     }
 }
+
+
 
 
 

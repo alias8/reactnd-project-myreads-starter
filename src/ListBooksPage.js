@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {BookShelf} from "./BookShelf";
 import {LoadingScreen} from "./LoadingScreen"
 import * as Globals from "./Globals";
+import PropTypes from 'prop-types';
 
 export const ListBooksPage = (props) => {
     const bookGroups = Globals.CATEGORIES_CAMELCASE.map(categoryName => (
@@ -30,3 +31,8 @@ export const ListBooksPage = (props) => {
         </div>
     )
 }
+
+ListBooksPage.propTypes = {
+    books: PropTypes.array.isRequired,
+    onSubmitChange: PropTypes.func.isRequired
+};

@@ -3,32 +3,39 @@ import {Link} from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
 import {BookShelf} from "./BookShelf";
 import {LoadingScreen} from "./LoadingScreen"
+import PropTypes from 'prop-types';
 
 export class SearchBooksPage extends Component {
-    state = {
-        query: '',
-        books: [],
-        searchSuccessful: false,
-        queryInProgress: false
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            query: '',
+            books: [],
+            searchSuccessful: false,
+            queryInProgress: false
+        };
+    }
 
     updateQuery = (query) => {
-        this.setState({query: query.target.value.trim()})
+        query = query.target.value.trim();
+        this.setState({query: query});
+        if (query.length > 0) {
+            this.setState({queryInProgress: true});
+            BooksAPI.search(query, 10).then(books => {
+                if (books.length > 0) {
+                    books = this.checkCorrectShelf(books); // fix the incorrect shelf
+                    this.setState({books, queryInProgress: false, searchSuccessful: true})
+                }
+                else {
+                    this.setState({books: [], queryInProgress: false, searchSuccessful: false})
+                }
+            })
+        } else {
+            this.setState({books: [], queryInProgress: false, searchSuccessful: false})
+        }
     };
-    handleSubmit = (event) => {
-        event.preventDefault();
-        let query = this.state.query;
-        this.setState({queryInProgress: true});
-        BooksAPI.search(query, 10).then(books => {
-            if (books.length > 0) {
-                books = this.checkCorrectShelf(books); // fix the incorrect shelf
-                this.setState({books, queryInProgress: false, searchSuccessful: true})
-            }
-            else {
-                this.setState({books: [], queryInProgress: false, searchSuccessful: false})
-            }
-        })
-    };
+
+
 
     checkCorrectShelf(booksFromSearch) {
         let booksFromTopLevel = this.props.books;
@@ -50,7 +57,7 @@ export class SearchBooksPage extends Component {
                         break; // book found, stop search
                     }
                 }
-            } else { 
+            } else {
                 for (let j = 0; j < correctedBooksFromShelf.length; j++) {
                     let obj = correctedBooksFromShelf[j];
                     if (obj.id === bookFromSearch.id) {
@@ -64,20 +71,16 @@ export class SearchBooksPage extends Component {
     }
 
     render() {
-        const {query} = this.state.query;
-
         return (
             <div className="search-books">
                 <div className="search-books-bar">
                     <Link to='/' className="close-search">Close</Link>
                     <div className="search-books-input-wrapper">
-                        <form onSubmit={this.handleSubmit}>
-                            <input type="text"
-                                   placeholder="Search by title or author"
-                                   value={query}
-                                   onChange={this.updateQuery}
-                            />
-                        </form>
+                        <input type="text"
+                               placeholder="Search by title or author"
+                               value={this.state.query}
+                               onChange={this.updateQuery}
+                        />
                     </div>
                 </div>
                 {this.state.queryInProgress &&
@@ -96,3 +99,8 @@ export class SearchBooksPage extends Component {
         )
     }
 }
+
+SearchBooksPage.propTypes = {
+    books: PropTypes.array.isRequired,
+    onSubmitChange: PropTypes.func.isRequired
+};
