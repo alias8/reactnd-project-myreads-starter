@@ -1,4 +1,8 @@
 This is the starter template for the final assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com). 
+Clone this repo and install the necessary packages with `npm install`.
+Change the shelves that each book belongs to with the green circle dropdown menu, and give each book
+a rating out of 5 with the yellow circle dropdown menu. Go to the search page to find
+more books to put on the home page.
 
 ## Backend Server
 

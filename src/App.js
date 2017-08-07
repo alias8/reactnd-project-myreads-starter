@@ -9,7 +9,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            books: []
+            shelfBooks: []
         };
     }
 
@@ -20,8 +20,8 @@ export default class App extends Component {
     };
 
     componentDidMount() {
+        //this.clearLocalStorage();
         this.update();
-        //this.clearLocalStorage()
     }
 
     clearLocalStorage() {
@@ -31,8 +31,8 @@ export default class App extends Component {
     }
 
     update() {
-        BooksAPI.getAll().then(books => {
-            this.setState({books});
+        BooksAPI.getAll().then(shelfBooks => {
+            this.setState({shelfBooks});
         });
     }
 
@@ -41,11 +41,11 @@ export default class App extends Component {
             <div className="app">
                 <Route exact path='/search' render={()=> (
                     <SearchBooksPage
-                        books={this.state.books}
+                        shelfBooks={this.state.shelfBooks}
                         onSubmitChange={this.onSubmitChange}/>)}/>
                 <Route exact path="/" render={()=>(
                     <ListBooksPage
-                        books={this.state.books}
+                        books={this.state.shelfBooks}
                         onSubmitChange={this.onSubmitChange}/>)}/>
             </div>
         )

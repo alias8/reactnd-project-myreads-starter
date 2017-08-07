@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {BookShelf} from "./BookShelf";
-import {LoadingScreen} from "./LoadingScreen"
+import {QueryInProgress} from "./LoadingScreen"
 import * as Globals from "./Globals";
 import PropTypes from 'prop-types';
 
@@ -15,7 +15,7 @@ export const ListBooksPage = (props) => {
                 <h1>MyReads</h1>
             </div>
             {props.books.length === 0 &&
-            <LoadingScreen/>}
+            <QueryInProgress/>}
             <div className="list-books-content">
                 {bookGroups.map((books, index) => (
                     <BookShelf key={index}
