@@ -3,23 +3,22 @@ import * as Globals from "./Globals";
 import PropTypes from 'prop-types';
 
 export class Book extends Component {
+    handleChange = (e) => {
+        let value = e.target.value;
+        value = Globals.MAP_NORMAL_TO_CAMELCASE[e.target.value];
+        this.props.onSubmitChange(this.props.id, e.target.name, value)
+    };
+    handleRatingChange = (e) => {
+        localStorage.setItem(`${localStorage.token} ${this.props.id}`, e.target.value);
+        this.setState({rating: e.target.value})
+    };
+
     constructor(props) {
         super(props);
         this.state = {
             rating: ""
         };
     }
-
-    handleChange = (e) => {
-        let value = e.target.value;
-        value = Globals.MAP_NORMAL_TO_CAMELCASE[e.target.value];
-        this.props.onSubmitChange(this.props.id, e.target.name, value)
-    };
-
-    handleRatingChange = (e) => {
-        localStorage.setItem(`${localStorage.token} ${this.props.id}`, e.target.value);
-        this.setState({rating: e.target.value})
-    };
 
     componentDidMount() {
         this.setState({rating: this.rating()});

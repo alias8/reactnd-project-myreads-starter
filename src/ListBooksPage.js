@@ -1,8 +1,8 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import {BookShelf} from "./BookShelf";
-import {QueryInProgress} from "./LoadingScreen"
-import * as Globals from "./Globals";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {BookShelf} from './BookShelf';
+import {QueryInProgress} from './LoadingScreen';
+import * as Globals from './Globals';
 import PropTypes from 'prop-types';
 
 export const ListBooksPage = (props) => {
@@ -18,10 +18,12 @@ export const ListBooksPage = (props) => {
             <QueryInProgress/>}
             <div className="list-books-content">
                 {bookGroups.map((books, index) => (
-                    <BookShelf key={index}
-                               shelfTitle={Globals.CATEGORIES[index]}
-                               books={books}
-                               onSubmitChange={props.onSubmitChange}/>
+                    <BookShelf
+                        key={index}
+                        shelfTitle={Globals.CATEGORIES[index]}
+                        books={books}
+                        onSubmitChange={props.onSubmitChange}
+                    />
 
                 ))}
             </div>
@@ -29,10 +31,13 @@ export const ListBooksPage = (props) => {
                 <Link to="/search">Add a book</Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
 ListBooksPage.propTypes = {
-    books: PropTypes.array.isRequired,
-    onSubmitChange: PropTypes.func.isRequired
+    books: PropTypes.arrayOf(PropTypes.shape({ // todo: find out what shape should be
+        color: PropTypes.string.isRequired,
+        fontSize: PropTypes.number.isRequired,
+    })).isRequired,
+    onSubmitChange: PropTypes.func.isRequired,
 };
