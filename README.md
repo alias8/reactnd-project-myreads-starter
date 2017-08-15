@@ -7,7 +7,7 @@ a rating out of 5 with the yellow circle dropdown menu. Go to the search page to
 more books to put on the home page. Below is a description of how the backend API works should you choose
 to modify this project.
 
-## **************************************************************************************************
+## ***************************************************************************
 
 ## Backend Server
 
