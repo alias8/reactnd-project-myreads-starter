@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
-import { SearchBooksPage } from './SearchBooksPage';
-import { ListBooksPage } from './ListBooksPage';
+import SearchBooksPage from './SearchBooksPage';
+import ListBooksPage from './ListBooksPage';
 import * as BooksAPI from './BooksAPI';
 
 export default class App extends Component {
@@ -12,24 +12,17 @@ export default class App extends Component {
       shelfBooks: [],
     };
 
-    this.onSubmitChange.bind(this);
+    this.onSubmitChange = this.onSubmitChange.bind(this);
   }
 
   componentDidMount() {
-    // this.clearLocalStorage();
+    // BooksAPI.clearLocalStorage();
     this.update();
   }
 
   onSubmitChange(id, selectOption, data) {
-    BooksAPI.update({ id }, data).then((response) => {
+    BooksAPI.update({ id }, data).then(() => {
       this.update();
-    });
-  }
-
-
-  clearLocalStorage() {
-    Object.keys(window.localStorage).forEach((key) => {
-      localStorage.removeItem(key);
     });
   }
 

@@ -1,6 +1,3 @@
-/* eslint no-undef: "error" */
-/* eslint-env browser */
-
 const api = 'https://reactnd-books-api.udacity.com';
 
 
@@ -42,3 +39,9 @@ export const search = (query, maxResults) =>
     },
     body: JSON.stringify({ query, maxResults }),
   }).then(res => res.json()).then(data => data.books);
+
+export const clearLocalStorage = () => {
+  Object.keys(window.localStorage).forEach((key) => {
+    localStorage.removeItem(key);
+  });
+};
